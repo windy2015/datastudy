@@ -13,7 +13,7 @@ public class StackApp {
 }
 
 /***
- * 栈的数据结构
+ * 线性栈的数据结构
  * @author mac
  *
  */
@@ -21,13 +21,13 @@ class Stack{
 	
 	private int top = -1;
 	
-	private int[] datas;
+	private Object[] datas;
 	
 	private int size;
 	
 	public Stack(int size){
 		this.size  = size;
-		this.datas = new int[size];
+		this.datas = new Object[size];
 	}
 	
 	/***
@@ -42,8 +42,8 @@ class Stack{
 	 * 出栈
 	 * @return
 	 */
-	public int  pop(){
-		int data = datas[top];
+	public Object  pop(){
+		Object data = datas[top];
 		top = top - 1;
 		return data;
 	}

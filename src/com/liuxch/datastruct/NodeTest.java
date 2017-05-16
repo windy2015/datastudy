@@ -28,20 +28,20 @@ public class NodeTest {
 
 class Node{
 	
-	private int data;
+	private Object data;
 	
 	private Node next;
 	
-	public Node(int data){
+	public Node(Object data){
 		this.data = data;
 		this.next = null;
 	}
 
-	public int getData() {
+	public Object getData() {
 		return data;
 	}
 
-	public void setData(int data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
 

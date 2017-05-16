@@ -72,9 +72,10 @@ class MyStack{
 		top = node;
 	}
 	
-	public void display(){
-		while(!this.isEmpty()){
-			System.out.print(pop()+"->");
+	public void display(){		
+		while(top!=null){
+			System.out.print(top.getData().toString()+"->");
+			top = top.getNext();
 		}
 	}
 	

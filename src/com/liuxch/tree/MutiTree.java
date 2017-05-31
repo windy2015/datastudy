@@ -3,7 +3,14 @@ package com.liuxch.tree;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /***
  * 多叉树数据结构
@@ -16,8 +23,6 @@ public class MutiTree {
 	// 多叉树根节点
 	private TreeNode root;
 
-	private List<TreeNode> paths = new ArrayList<TreeNode>();
-
 	public MutiTree(TreeNode root) {
 		this.root = root;
 	}
@@ -28,6 +33,40 @@ public class MutiTree {
 			System.out.print(paths.get(i).getValue() + "->");
 		}
 		System.out.println("\n--------------path   end------------------");
+	}
+	
+	
+	public Set<TreeNode> findPaths(TreeNode nodeA, TreeNode nodeB){
+		Set<TreeNode> finalPath = new HashSet<TreeNode>();
+		List<TreeNode> nodeAChilds = new ArrayList<TreeNode>();
+		List<TreeNode> nodeBChilds = new ArrayList<TreeNode>();
+		getAllChilds(nodeA, nodeAChilds);
+		getAllChilds(nodeB, nodeBChilds);
+		
+		if(nodeAChilds.contains(nodeB)){
+			List<TreeNode> path1 = new ArrayList<TreeNode>();
+			findDPath(nodeA, nodeB, path1);
+			finalPath.addAll(path1);
+		}else if(nodeBChilds.contains(nodeA)){
+			List<TreeNode> path2 = new ArrayList<TreeNode>();
+			findDPath(nodeB, nodeA, path2);
+			finalPath.addAll(path2);
+		}else{
+			//List<TreeNode> path3 = new ArrayList<TreeNode>();
+			//this.findAndPath(nodeA, nodeB, path3);
+			List<TreeNode> des = new ArrayList<TreeNode>();
+			des.add(nodeA);
+			des.add(nodeB);
+			TreeNode parent = findParent(des);
+			List<TreeNode> a_parent = new ArrayList<TreeNode>();
+			List<TreeNode> parent_b = new ArrayList<TreeNode>();
+			this.findDPath(nodeA, parent, a_parent);
+			this.findDPath(parent, nodeB, parent_b);
+			finalPath.addAll(a_parent);
+			finalPath.addAll(parent_b);
+		}
+		
+		return finalPath;
 	}
 
 	/***
@@ -60,7 +99,7 @@ public class MutiTree {
 	}
 
 	/**
-	 * A B是并列节点,有共同的父节点
+	 * A B是父子节点
 	 * 
 	 * @param nodeA
 	 * @param nodeB
@@ -118,18 +157,29 @@ public class MutiTree {
 		List<List<TreeNode>> nodelist = new ArrayList<List<TreeNode>>();
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		getAllChilds(root, nodes);
-		int num = nodes.size();		
+		int num = nodes.size();
+		Map<Integer,Integer> childsMap = new TreeMap<Integer,Integer>(new Comparator<Integer>(){
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				//order by desc
+				return o1.compareTo(o2);
+			}
+			
+		});
 		for (int i = 0; i < num; i++) {
 			TreeNode newNode = nodes.get(i);
 			List<TreeNode> childs = new ArrayList<TreeNode>();
 			getAllChilds(newNode, childs);
 			if (childs.containsAll(des)) {
-				nodelist.add(childs);				
+				nodelist.add(childs);
+				childsMap.put(i, childs.size());
 			}
 		}
-
-		int index = -1;
-		return nodes.get(index);
+		Set<Integer> keys = childsMap.keySet();
+		Iterator<Integer> it = keys.iterator();
+		Integer firstKey = it.next();
+		return nodes.get(firstKey);
 	}
 
 }

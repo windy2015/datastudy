@@ -1,7 +1,9 @@
 package com.liuxch.tree;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /***
  *        A
@@ -47,10 +49,17 @@ public class TestTree {
 		//tree.printPaths(dpaths);
 		
 		List<TreeNode> des = new ArrayList<TreeNode>();
-		des.add(nodeB);
-		des.add(nodeC);
-		TreeNode parent = tree.findParent(des);
-		System.out.println(parent.getValue());
+		//des.add(nodeD);
+		//des.add(nodeG);
+		//TreeNode parent = tree.findParent(des);
+		//System.out.println(parent.getValue());
+		Set<TreeNode> paths = tree.findPaths(nodeD, nodeG);
+		Iterator<TreeNode> iterator = paths.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next().getValue());
+		}
+		
+		 
 		
 	}
 

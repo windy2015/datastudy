@@ -1,4 +1,4 @@
-package com.liuxch.String;
+package com.liuxch.string;
 
 import java.util.HashMap;
 import java.util.Map;

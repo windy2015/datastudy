@@ -21,7 +21,7 @@ public class Student implements CallBack{
 	/***
 	 * 用一个线程模拟异步调用
 	 */
-	public void askQuestion(final String question){
+	public void askQuestion( final String question){
 		new Thread(){
 
 			@Override
